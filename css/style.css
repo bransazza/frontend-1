@@ -263,6 +263,11 @@ ul
     margin-right: 15px;
 
 }
+.nav a.active {
+    color: #ff5722; /* Ubah warna untuk menyoroti */
+    transition: color 0.3s ease-in-out;
+}
+
 /* home */
 .home
 {
@@ -657,6 +662,7 @@ h3.my-profession
     height: 50px;
     padding: 0 50px;
 }
+
 @media (max-width:1199px)
 {
     .aside

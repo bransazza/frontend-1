@@ -1,3 +1,4 @@
+/* Typing Animation*/
 var typed = new Typed(".typing", {
     strings:["","Lab Assistant","Programmer","Electrical Engineering Student"],
     typeSpeed:100,
