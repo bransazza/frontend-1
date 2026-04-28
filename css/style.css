@@ -315,19 +315,18 @@ h3.my-profession
     position: relative;
 
 }
-.home-img::after
-{
+.home .img-box::after {
     content: '';
     position: absolute;
     height: 80px;
     width: 80px;
     border-bottom: 10px solid var(--skin-color);
     border-right: 10px solid var(--skin-color);
-    right: 20px;
-    bottom: -40px;
+    right: -20px;
+    bottom: -20px;
+    z-index: 0;
 }
-.home-img::before
-{
+.home .img-box::before {
     content: '';
     position: absolute;
     height: 80px;
@@ -335,15 +334,31 @@ h3.my-profession
     border-top: 10px solid var(--skin-color);
     border-left: 10px solid var(--skin-color);
     left: -20px;
-    top: -40px;
+    top: -20px;
+    z-index: 0;
 }
-.home .home-img img
-{
-    margin: auto;
-    border-radius: 5px;
+.home .home-img {
+    flex: 0 0 40%;
+    max-width: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Mencegah kotak ikut memanjang ke bawah */
+}
+.home .img-box {
+    position: relative;
+    display: inline-block; /* Kunci agar siku orange menempel pas di gambar */
+}
+.home .img-box img {
+    border-radius: 10px;
     height: 400px;
-
+    width: 100%;
+    max-width: 350px; 
+    object-fit: cover;
+    position: relative;
+    z-index: 1; /* Agar foto berada di atas siku orange */
 }
+
 /* About */
 .about .about-content
 {
@@ -572,6 +587,64 @@ h3.my-profession
     overflow: hidden;
     cursor: pointer;
 }
+
+.portofolio .portofolio-img {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Memastikan gambar selalu pas dengan kotak dan tidak melebar */
+.portofolio .portofolio-img img {
+    width: 100%;
+    height: 250px; /* Kamu bisa ubah tinggi ini sesuai selera agar semua gambar seragam */
+    object-fit: cover; /* Memastikan gambar tidak gepeng */
+    display: block;
+    transition: all 0.3s ease;
+}
+
+/* Desain kotak teks transparan yang muncul saat di-hover */
+.portofolio .portfolio-info {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Warna hitam transparan */
+    left: 0;
+    top: 100%; /* Sembunyi di bawah sebelum di-hover */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.4s ease-in-out;
+}
+
+/* Efek animasi saat kotak disentuh kursor (Hover) */
+.portofolio .portofolio-item-inner:hover .portfolio-info {
+    top: 0; /* Teks meluncur ke atas */
+}
+
+/* Efek tambahan: Gambar sedikit membesar saat di-hover */
+.portofolio .portofolio-item-inner:hover .portofolio-img img {
+    transform: scale(1.1);
+}
+
+/* Ukuran dan warna teks judul proyek */
+.portofolio .portfolio-info h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+}
+
+/* Ukuran dan warna teks deskripsi proyek */
+.portofolio .portfolio-info p {
+    font-size: 14px;
+    color: #e9e9e9;
+    line-height: 20px;
+}
+
 /* Contact */
 .contact-title
 {
@@ -694,7 +767,10 @@ h3.my-profession
     }
     .home .home-img
     {
-        display: none;
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-top: 60px; /* Jarak antara tombol Hire Me dan foto di HP */
+        text-align: center;
     }
 }
 @media (max-width:767px)
@@ -709,5 +785,63 @@ h3.my-profession
     {
         flex: 0 0 100%;
         max-width: 100%;
+    }
+    .home .img-box img {
+        height: 300px; /* Ukuran foto diperkecil agar tidak memenuhi layar HP */
+    }
+    /* Sembunyikan garis orange di layar HP yang terlalu kecil agar tetap bersih */
+    .home .img-box::before,
+    .home .img-box::after {
+        display: none;
+    }y
+}
+
+/* =========================================
+   Responsive Hamburger Menu (Mobile)
+   ========================================= */
+@media (max-width: 1199px) {
+    /* Menampilkan tombol menu di HP */
+    .aside .nav-toggler {
+        display: flex;
+        left: 30px; /* Posisi tombol di pojok kiri atas */
+        background-color: var(--bg-black-100);
+        transition: all 0.3s ease;
+    }
+
+    /* Transisi agar sidebar bergeser mulus */
+    .aside {
+        transition: all 0.3s ease;
+        z-index: 100;
+    }
+
+    /* Class yang akan ditambahkan oleh JS saat tombol diklik */
+    .aside.open {
+        left: 0;
+    }
+
+    /* Menggeser tombol saat menu terbuka & mengubahnya jadi tanda 'X' */
+    .aside .nav-toggler.open {
+        left: 300px;
+    }
+    .aside .nav-toggler.open span {
+        background-color: transparent;
+    }
+    .aside .nav-toggler.open span::before {
+        transform: rotate(45deg);
+        top: 0;
+    }
+    .aside .nav-toggler.open span::after {
+        transform: rotate(-45deg);
+        top: 0;
+    }
+}
+
+/* Penyesuaian gambar khusus untuk layar HP */
+@media (max-width:767px) {
+    .home .home-img img {
+        height: 300px; /* Gambar sedikit dikecilkan agar proporsional di HP */
+    }
+    .home-img::after, .home-img::before {
+        display: none; /* Sembunyikan border siku orange di HP agar lebih rapi & modern */
     }
 }
